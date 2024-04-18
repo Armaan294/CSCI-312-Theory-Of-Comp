@@ -68,13 +68,14 @@ window.onload = function() {
 
 function update() {
     requestAnimationFrame(update);
-    
+    context.clearRect(0,0,boardWidth,boardHeight);
     //dinosaur
     context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
 
     //cactus
     for (let i = 0; i < cactusArray.length; i++){
         let cactus = cactusArray[i];
+        cactus.x+=velX;
         context.drawImage(cactus.img, cactus.x, cactus.y, cactus.width, cactus.height);
     }
 
@@ -110,4 +111,10 @@ function placeCactus() {
     }
 
 }
+//physics 
+let velX=-8;
+let velY=0;
+let gravity=0.4;
+let gameOver=false;
+let score=0;
 
