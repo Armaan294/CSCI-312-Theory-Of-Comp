@@ -67,9 +67,14 @@ window.onload = function() {
 }
 
 function update() {
+    
     requestAnimationFrame(update);
+    if(gameOver){
+        return;
+    }
     context.clearRect(0,0,boardWidth,boardHeight);
     //dinosaur
+    velY+=gravity;
     context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
 
     //cactus
@@ -80,9 +85,21 @@ function update() {
     }
 
 }
+function moveCharacter(e){
+    if(gameOver){
+        return;
+    }
+    if((e.code=="Space"||e.code=="ArrowUp")&& dino.y==dinoY){
+        velY=-10;
+
+    }
+
+}
 
 function placeCactus() {
-
+    if(gameOver){
+        return;
+    }
     //place the cactus down
     let cactus = {
         img : null,
@@ -108,6 +125,9 @@ function placeCactus() {
         cactus.img = cactus1Img;
         cactus.width = cactus1Width;
         cactusArray.push(cactus);
+    }
+    if(cactusArray.length>5){
+        cactusArray.shift();
     }
 
 }
