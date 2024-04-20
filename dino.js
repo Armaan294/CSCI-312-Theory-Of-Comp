@@ -64,6 +64,7 @@ window.onload = function() {
 
     requestAnimationFrame(update);
     setInterval(placeCactus, 1000); //Function is called every second to generate cactus
+    document.addEventListener("keydown",moveCharacter);
 }
 
 function update() {
@@ -75,6 +76,7 @@ function update() {
     context.clearRect(0,0,boardWidth,boardHeight);
     //dinosaur
     velY+=gravity;
+    dino.y= Math.min(dino.y+velY,dinoY); //apply gravity
     context.drawImage(dinoImg, dino.x, dino.y, dino.width, dino.height);
 
     //cactus
@@ -82,7 +84,16 @@ function update() {
         let cactus = cactusArray[i];
         cactus.x+=velX;
         context.drawImage(cactus.img, cactus.x, cactus.y, cactus.width, cactus.height);
+        if(hitObject(dino,cactus)){
+            gameOver=true;
+        }
     }
+
+    //score
+    context.fillStyle="white";
+    context.font="20px courier";
+    score++;
+    context.fillText(score,5,20);
 
 }
 function moveCharacter(e){
@@ -138,3 +149,9 @@ let gravity=0.4;
 let gameOver=false;
 let score=0;
 
+function hitObject(a,b){
+    return a.x < b.x +b.width &&
+            a.x +a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.y +a.height > b.y;
+}
