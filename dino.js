@@ -66,6 +66,12 @@ window.onload = function() {
     setInterval(placeCactus, 1000); //Function is called every second to generate cactus
     document.addEventListener("keydown",moveCharacter);
 }
+function startGame(){
+
+}
+function restartGame(){
+    
+}
 
 function update() {
     
