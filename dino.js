@@ -3,6 +3,7 @@ let board;
 let boardWidth = 750;
 let boardHeight = 250;
 let context;
+let name = null;
 
 //dino
 let dinoWidth = 88;
@@ -10,6 +11,13 @@ let dinoHeight = 94;
 let dinoX = 50;
 let dinoY = boardHeight - dinoHeight;
 let dinoImg;
+
+//physics 
+let velX=-8;
+let velY=0;
+let gravity=0.4;
+let gameOver=false;
+let score=0;
 
 let dino = {
     x : dinoX,
@@ -59,7 +67,15 @@ window.onload = function() {
 
     cactus3Img = new Image();
     cactus3Img.src = "./img/cactus3.png";
-
+    
+    document.getElementById("nameForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        name = document.getElementById("nameInput").value;
+    });
+    document.getElementById("nameForm").addEventListener("submit", function(event) {
+        event.preventDefault();
+        document.getElementById("nameForm").style.display = "none";
+    });
 
 
     requestAnimationFrame(update);
@@ -77,6 +93,16 @@ function update() {
     
     requestAnimationFrame(update);
     if(gameOver){
+        return;
+    }
+    else if(name==null){
+        context.fillStyle="white";
+        context.font="30px courier";
+        let text = "Enter your name to start the game";
+        let textWidth = context.measureText(text).width;
+        let textX = boardWidth/2 - textWidth/2;
+        let textY = boardHeight/2;
+        context.fillText(text, textX, textY);
         return;
     }
     context.clearRect(0,0,boardWidth,boardHeight);
@@ -108,7 +134,6 @@ function moveCharacter(e){
     }
     if((e.code=="Space"||e.code=="ArrowUp")&& dino.y==dinoY){
         velY=-10;
-
     }
 
 }
@@ -148,12 +173,6 @@ function placeCactus() {
     }
 
 }
-//physics 
-let velX=-8;
-let velY=0;
-let gravity=0.4;
-let gameOver=false;
-let score=0;
 
 function hitObject(a,b){
     return a.x < b.x +b.width &&
