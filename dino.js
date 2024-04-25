@@ -4,6 +4,7 @@ let boardWidth = 750;
 let boardHeight = 250;
 let context;
 let name = null;
+let leaderboardData = JSON.parse(localStorage.getItem("leaderboard")) || [];
 
 //dino
 let dinoWidth = 88;
@@ -77,6 +78,8 @@ window.onload = function() {
         document.getElementById("nameForm").style.display = "none";
     });
 
+    getLeaderboard();
+
 
     requestAnimationFrame(update);
     setInterval(placeCactus, 1000); //Function is called every second to generate cactus
@@ -93,6 +96,12 @@ function update() {
         let textWidth = context.measureText(text).width;
         let textX = boardWidth/2 - textWidth/2;
         let textY = boardHeight/2;
+        context.fillText(text, textX, textY);
+        context.font="20px courier";
+        text = "Press space to restart";
+        textWidth = context.measureText(text).width;
+        textX = boardWidth/2 - textWidth/2;
+        textY = boardHeight/2 + 30;
         context.fillText(text, textX, textY);
         return;
     }
@@ -135,8 +144,10 @@ function moveCharacter(e){
         dinoX = 50;
         dinoY = boardHeight - dinoHeight;
         cactusArray = [];
-        score = 0;
 
+        leaderboardData.push({name: name, score: score});
+        getLeaderboard();
+        score = 0;
         return;
     }
     if((e.code=="Space"||e.code=="ArrowUp")&& dino.y==dinoY){
@@ -186,4 +197,21 @@ function hitObject(a,b){
             a.x +a.width > b.x &&
             a.y < b.y + b.height &&
             a.y +a.height > b.y;
+}
+
+function getLeaderboard() {
+    const leaderboardTable = document.getElementById('leaderboard');
+    leaderboardTable.innerHTML = '<tr><th>Rank</th><th>Name</th><th>Score</th></tr>';
+
+    leaderboardData.sort((a, b) => b.score - a.score);
+    // Iterate over the leaderboard data and create table rows
+    leaderboardData.forEach((entry, index) => {
+        const row = document.createElement('tr');
+        row.innerHTML = `
+            <td>${index + 1}</td>
+            <td>${entry.name}</td>
+            <td>${entry.score}</td>
+        `;
+        leaderboardTable.appendChild(row);
+    });
 }

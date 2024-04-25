@@ -1,5 +1,5 @@
 body{
-    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: Calibri, 'Trebuchet MS', sans-serif;
     text-align: center;
 
 }
@@ -18,4 +18,25 @@ body{
     margin-top: 10px;
     left: 0;
     font-size: medium;
+}
+
+.leaderboardCol {
+    margin-top: 10px;
+    font-size: medium;
+}
+
+th {
+    font-size: medium;
+    font-weight: bold;
+    padding: 0px 10px 0px 10px;
+}
+
+td {
+    font-size: medium;
+    padding: 0px 10px 0px 10px;
+}
+
+#leaderboard {
+    margin-left: auto;
+    margin-right: auto;
 }
