@@ -82,17 +82,18 @@ window.onload = function() {
     setInterval(placeCactus, 1000); //Function is called every second to generate cactus
     document.addEventListener("keydown",moveCharacter);
 }
-function startGame(){
 
-}
-function restartGame(){
-    
-}
 
 function update() {
-    
     requestAnimationFrame(update);
     if(gameOver){
+        context.fillStyle="white";
+        context.font="30px courier";
+        let text = "Game Over";
+        let textWidth = context.measureText(text).width;
+        let textX = boardWidth/2 - textWidth/2;
+        let textY = boardHeight/2;
+        context.fillText(text, textX, textY);
         return;
     }
     else if(name==null){
@@ -130,6 +131,12 @@ function update() {
 }
 function moveCharacter(e){
     if(gameOver){
+        gameOver=false;
+        dinoX = 50;
+        dinoY = boardHeight - dinoHeight;
+        cactusArray = [];
+        score = 0;
+
         return;
     }
     if((e.code=="Space"||e.code=="ArrowUp")&& dino.y==dinoY){
