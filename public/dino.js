@@ -206,7 +206,16 @@ function getLeaderboard() {
             let copyOfData = data;
             if (name != null) {
                 copyOfData.push({name: name, score: score});
-                //SEND DATA TO SERVER
+                fetch('/sendScore', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({name: name, score: score}),
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
             }
             updateLeaderboard(copyOfData);
         })
