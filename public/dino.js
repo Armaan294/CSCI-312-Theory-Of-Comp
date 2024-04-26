@@ -19,6 +19,7 @@ let velY=0;
 let gravity=0.4;
 let gameOver=false;
 let score=0;
+let copyOfScore = score;
 
 let dino = {
     x : dinoX,
@@ -144,9 +145,11 @@ function moveCharacter(e){
         dinoX = 50;
         dinoY = boardHeight - dinoHeight;
         cactusArray = [];
+        copyOfScore = score;
 
-        localLeaderboardData.push({name: name, score: score});
+        localLeaderboardData.push({name: name, score: copyOfScore});
         getLeaderboard();
+
         score = 0;
         return;
     }
@@ -205,22 +208,25 @@ function getLeaderboard() {
         .then(data => {
             let copyOfData = data;
             if (name != null) {
-                copyOfData.push({name: name, score: score});
-                fetch('/sendScore', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({name: name, score: score}),
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
+                if(data.length < 15 || data[data.length - 1].score < copyOfScore) {
+                    copyOfData.push({name: name, score: copyOfScore});
+                    fetch('/sendScore', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({name: name, score: copyOfScore}),
+                    })
+                    .catch((error) => {
+                        console.error('Error:', error);
+                    });
+                }
             }
             updateLeaderboard(copyOfData);
         })
         .catch(error => console.error(error));
 
+        score = 0;
 }
 
 function updateLeaderboard(leaderboard) {

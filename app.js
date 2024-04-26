@@ -13,7 +13,7 @@ const pool = new Pool({
 // Getting scores and sending to frontend
 async function getHighestScoresServer() {
     console.log("Getting scores from server");
-    const res = await pool.query('SELECT * FROM scores;');
+    const res = await pool.query('SELECT * FROM scores ORDER BY SCORE DESC LIMIT 15;');
     return res.rows;
   }
   app.get('/getHighestScores', async (req, res) => {
@@ -24,6 +24,7 @@ async function getHighestScoresServer() {
 //SENDING SCORES BACKEND
 async function sendScoresServer(name, score) {
     const res = await pool.query('INSERT INTO scores (name, score) VALUES (\'' + name + '\', ' + score + ');');
+    console.log(res);
     return res.rowCount;
   }
   app.post('/sendScore', async (req, res) => {
@@ -37,6 +38,19 @@ async function createTable() {
     console.log(res.rows);
   }
   createTable();
+
+
+
+  async function DELETE(score) {
+    const res = await pool.query('DELETE FROM defaultdb.scores WHERE score <' + score + ';');
+    console.log(res);
+    return res.rowCount;
+  }
+
+  //DELETE(5000);
+
+
+
 
 
 app.use(express.static('public'));
