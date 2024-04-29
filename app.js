@@ -46,8 +46,15 @@ async function createTable() {
     console.log(res);
     return res.rowCount;
   }
+  app.post('/delete', async (req, res) => {
+    const { score } = req.body;
+    const rowCount = await DELETE(score);
+    if (rowCount === 0) {
+      res.status(404).send('No scores to delete');
+    }
+  });
 
-  //DELETE(5000);
+  //DELETE(1475);
 
 
 

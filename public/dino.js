@@ -208,7 +208,7 @@ function getLeaderboard() {
         .then(data => {
             let copyOfData = data;
             if (name != null) {
-                if(data.length < 15 || data[data.length - 1].score < copyOfScore) {
+                if(data.length < 10 || data[data.length - 1].score < copyOfScore) {
                     copyOfData.push({name: name, score: copyOfScore});
                     fetch('/sendScore', {
                         method: 'POST',
@@ -222,6 +222,18 @@ function getLeaderboard() {
                     });
                 }
             }
+            if (copyOfData.length >= 11) {
+                console.log("deleting");
+                copyOfData.sort((a, b) => b.score - a.score);
+                fetch('/delete', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({score: copyOfData[10].score}),
+                })
+            }
+            copyOfData = copyOfData.slice(0, 10);
             updateLeaderboard(copyOfData);
         })
         .catch(error => console.error(error));
