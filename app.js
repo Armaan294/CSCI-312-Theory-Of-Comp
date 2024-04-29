@@ -13,7 +13,7 @@ const pool = new Pool({
 // Getting scores and sending to frontend
 async function getHighestScoresServer() {
     console.log("Getting scores from server");
-    const res = await pool.query('SELECT * FROM scores ORDER BY SCORE DESC LIMIT 15;');
+    const res = await pool.query('SELECT * FROM scores ORDER BY SCORE DESC LIMIT 10;');
     return res.rows;
   }
   app.get('/getHighestScores', async (req, res) => {
