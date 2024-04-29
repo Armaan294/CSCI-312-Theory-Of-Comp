@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <META name="viewport", content="width=device-width, initial-scale=1.0">
+        <title>FSM Dinosaur Game</title>
+        <link rel="stylesheet" href="dino.css">
+        <script src="dino.js"></script>
+    </head>
+    <body>
+        <h1>
+            FSM Dino Games
+            <form class="nameInputForm" id="nameForm">
+                <label for="name">Name:</label>
+                <input type="text" id="nameInput" name="name" required>
+                <input type="submit" value="Submit">
+            </form>
+        </h1>
+        <canvas id="board"></canvas>
+        <h1>LeaderBoard</h1>
+        <p>Made by: Benoy, Bikram, Armaan</p>
+        <!-- have a dynamically updating leaderboard here -->
+        <table id="leaderboard">
+            <tr>
+                <th>Rank</th>
+                <th>Name</th>
+                <th>Score</th>
+            </tr>
+        </table>
+    </body>
+
+</html>

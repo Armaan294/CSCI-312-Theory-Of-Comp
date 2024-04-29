@@ -1,0 +1,4 @@
+server user name=benoy
+server password= MKrdCQcy9Gw7vNCld2_11Q
+sql conneection string
+postgresql://benoy:<ENTER-SQL-USER-PASSWORD>@calmed-mantis-14410.7tt.aws-us-east-1.cockroachlabs.cloud:26257/defaultdb?sslmode=verify-full
